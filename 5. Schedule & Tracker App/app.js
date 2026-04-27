@@ -6,6 +6,7 @@ const START_HOUR  = 5;
 const END_HOUR    = 23;
 const HOURS       = Array.from({ length: END_HOUR - START_HOUR + 1 }, (_, i) => i + START_HOUR);
 const COLORS      = ['#6366f1','#10b981','#f59e0b','#ef4444','#8b5cf6','#ec4899','#06b6d4','#84cc16'];
+const MS_PER_DAY  = 864e5; // milliseconds in one day
 const DAYS        = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const MONTHS      = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
@@ -484,8 +485,8 @@ document.addEventListener('click', e => {
   }
 
   // Prev / next / today
-  if (t.id === 'prevDay')  { state.currentDate = new Date(state.currentDate - 864e5); renderSchedule(); return; }
-  if (t.id === 'nextDay')  { state.currentDate = new Date(+state.currentDate + 864e5); renderSchedule(); return; }
+  if (t.id === 'prevDay')  { state.currentDate = new Date(state.currentDate - MS_PER_DAY); renderSchedule(); return; }
+  if (t.id === 'nextDay')  { state.currentDate = new Date(+state.currentDate + MS_PER_DAY); renderSchedule(); return; }
   if (t.id === 'todayBtn') { state.currentDate = new Date(); renderSchedule(); return; }
 
   // Add category button
