@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="theme-color" content="#6366f1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Planner" />
+  <meta name="description" content="Schedule & checklist tracker — runs on phone and laptop" />
+  <title>My Planner</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+
+    <!-- ── Header ──────────────────────────────────────────── -->
+    <header class="header">
+      <div class="header-content">
+        <h1 class="app-title">📋 My Planner</h1>
+        <span class="header-date" id="headerDate"></span>
+      </div>
+    </header>
+
+    <!-- ── Schedule Tab ─────────────────────────────────────── -->
+    <section id="tab-schedule" class="tab-content active">
+      <div class="date-nav">
+        <button class="btn-icon" id="prevDay" aria-label="Previous day">&#8249;</button>
+        <div class="date-display">
+          <div class="date-day" id="currentDayName"></div>
+          <div class="date-full" id="currentDateFull"></div>
+        </div>
+        <button class="btn-icon" id="nextDay" aria-label="Next day">&#8250;</button>
+        <button class="btn-today" id="todayBtn">Today</button>
+      </div>
+      <div class="schedule-grid" id="scheduleGrid"></div>
+    </section>
+
+    <!-- ── Checklist Tab ─────────────────────────────────────── -->
+    <section id="tab-checklist" class="tab-content">
+      <div class="section-header">
+        <h2>Checklists</h2>
+        <button class="btn-add" id="addCategoryBtn">+ Category</button>
+      </div>
+      <div id="checklistContainer"></div>
+    </section>
+
+    <!-- ── Progress Tab ──────────────────────────────────────── -->
+    <section id="tab-progress" class="tab-content">
+      <div id="progressOverview"></div>
+    </section>
+
+    <!-- ── Bottom Navigation ────────────────────────────────── -->
+    <nav class="bottom-nav" aria-label="Main navigation">
+      <button class="nav-item active" data-tab="schedule">
+        <span class="nav-icon">📅</span>
+        <span class="nav-label">Schedule</span>
+      </button>
+      <button class="nav-item" data-tab="checklist">
+        <span class="nav-icon">✅</span>
+        <span class="nav-label">Checklist</span>
+      </button>
+      <button class="nav-item" data-tab="progress">
+        <span class="nav-icon">📊</span>
+        <span class="nav-label">Progress</span>
+      </button>
+    </nav>
+
+  </div><!-- #app -->
+
+  <!-- ── Modal ──────────────────────────────────────────────── -->
+  <div id="modal-overlay" class="modal-overlay hidden" role="dialog" aria-modal="true">
+    <div id="modal" class="modal"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
