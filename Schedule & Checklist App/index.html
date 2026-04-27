@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+  <meta name="theme-color" content="#7c3aed"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <title>My Planner</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="manifest" href="manifest.json"/>
+</head>
+<body>
+
+<!-- ── Header ──────────────────────────────────────────────── -->
+<header class="app-header">
+  <h1>📅 My Planner</h1>
+  <span class="date-display" id="dateDisplay"></span>
+</header>
+
+<!-- ── Tabs ────────────────────────────────────────────────── -->
+<nav class="tab-bar">
+  <button class="tab-btn active" data-tab="schedule">🗓 Schedule</button>
+  <button class="tab-btn"        data-tab="checklist">✅ Checklist</button>
+  <button class="tab-btn"        data-tab="progress">📊 Progress</button>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!--  TAB 1 – SCHEDULE                                         -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="tab-panel active" id="tab-schedule">
+
+  <div class="day-selector" id="daySelector"></div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title" id="scheduleDayTitle">Monday</span>
+      <button class="btn btn-primary btn-sm" id="addSlotBtn">+ Add Slot</button>
+    </div>
+    <div id="slotList"></div>
+    <p id="noSlots" style="text-align:center;color:var(--muted);font-size:.85rem;padding:.5rem 0">
+      No slots yet – tap <strong>+ Add Slot</strong> to begin.
+    </p>
+  </div>
+
+</section>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!--  TAB 2 – CHECKLIST                                        -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="tab-panel" id="tab-checklist">
+
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">Categories</span>
+      <button class="btn btn-primary btn-sm" id="addCategoryBtn">+ Category</button>
+    </div>
+    <div id="categoryList"></div>
+  </div>
+
+</section>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!--  TAB 3 – PROGRESS                                         -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="tab-panel" id="tab-progress">
+
+  <div class="streak-badge" id="streakBadge">
+    <span class="streak-icon">🔥</span>
+    <div>
+      <div class="streak-text" id="streakText">Loading…</div>
+      <div style="font-size:.72rem;opacity:.8">Daily check-in streak</div>
+    </div>
+  </div>
+
+  <div class="stat-grid" id="statGrid"></div>
+
+  <div id="progressCategories"></div>
+
+</section>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!--  MODAL – Add / Edit Schedule Slot                         -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="slotModal">
+  <div class="modal">
+    <div class="modal-title" id="slotModalTitle">Add Schedule Slot</div>
+    <label>Time (e.g. 09:00 – 10:00)</label>
+    <input class="inline-input" id="slotTimeInput" placeholder="09:00 – 10:00" type="text"/>
+    <label>Title</label>
+    <input class="inline-input" id="slotTitleInput" placeholder="e.g. Maths / Jogging / Lecture"/>
+    <label>Notes (optional)</label>
+    <input class="inline-input" id="slotNoteInput" placeholder="Any extra details…"/>
+    <label>Color accent</label>
+    <div id="colorPicker" style="display:flex;gap:.5rem;margin-top:.35rem;flex-wrap:wrap"></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="slotCancelBtn">Cancel</button>
+      <button class="btn btn-primary" id="slotSaveBtn">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL – Add Category -->
+<div class="modal-overlay" id="categoryModal">
+  <div class="modal">
+    <div class="modal-title">New Category</div>
+    <label>Category name</label>
+    <input class="inline-input" id="catNameInput" placeholder="e.g. Physics, Fitness, Coding…"/>
+    <label>Emoji icon</label>
+    <input class="inline-input" id="catEmojiInput" placeholder="📚" maxlength="4"/>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="catCancelBtn">Cancel</button>
+      <button class="btn btn-primary" id="catSaveBtn">Add Category</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL – Add Checklist Item -->
+<div class="modal-overlay" id="itemModal">
+  <div class="modal">
+    <div class="modal-title">New Item</div>
+    <label>Item / Topic</label>
+    <input class="inline-input" id="itemTextInput" placeholder="e.g. Chapter 3 – Kinematics"/>
+    <input type="hidden" id="itemCategoryId"/>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="itemCancelBtn">Cancel</button>
+      <button class="btn btn-primary" id="itemSaveBtn">Add Item</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
