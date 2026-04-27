@@ -14,12 +14,14 @@ const STORAGE_KEY_SCHEDULE  = 'planner_schedule';
 const STORAGE_KEY_CHECKLIST = 'planner_checklist';
 const STORAGE_KEY_STREAK    = 'planner_streak';
 
+const TODAY_DAY = new Date().getDay();
+
 /* ── State ─────────────────────────────────────────────────── */
 let state = {
   schedule:  loadJSON(STORAGE_KEY_SCHEDULE,  defaultSchedule()),
   checklist: loadJSON(STORAGE_KEY_CHECKLIST, defaultChecklist()),
   streak:    loadJSON(STORAGE_KEY_STREAK,    { count: 0, lastDate: '' }),
-  activeDay: DAYS[new Date().getDay() === 0 ? 6 : new Date().getDay() - 1],
+  activeDay: DAYS[TODAY_DAY === 0 ? 6 : TODAY_DAY - 1],
   editingSlot: null,   // { dayIndex, slotId } | null
 };
 
@@ -33,7 +35,10 @@ function save() {
   localStorage.setItem(STORAGE_KEY_CHECKLIST, JSON.stringify(state.checklist));
   localStorage.setItem(STORAGE_KEY_STREAK,    JSON.stringify(state.streak));
 }
-function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+function uid() {
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) return crypto.randomUUID();
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+}
 
 function defaultSchedule() {
   return DAYS.map(day => ({ day, slots: [] }));
@@ -444,10 +449,9 @@ document.querySelectorAll('.modal-overlay').forEach(overlay => {
 });
 
 /* ── Escape HTML ────────────────────────────────────────────── */
+const HTML_ENTITIES = { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' };
 function escHtml(str) {
-  return String(str ?? '').replace(/[&<>"']/g, c => ({
-    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
-  })[c]);
+  return String(str ?? '').replace(/[&<>"']/g, c => HTML_ENTITIES[c]);
 }
 
 /* ════════════════════════════════════════════════════════════

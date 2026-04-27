@@ -24,6 +24,14 @@ self.addEventListener('activate', e => {
 
 self.addEventListener('fetch', e => {
   e.respondWith(
-    caches.match(e.request).then(cached => cached || fetch(e.request))
+    caches.match(e.request).then(cached => {
+      if (cached) return cached;
+      return fetch(e.request).catch(() =>
+        new Response('Offline – resource not available', {
+          status: 503,
+          headers: { 'Content-Type': 'text/plain' }
+        })
+      );
+    })
   );
 });
